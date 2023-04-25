@@ -1,0 +1,47 @@
+.button {
+  composes: blueButton from './common.module.css';
+}
+
+.container {
+  composes: pageBlock from "./common.module.css";
+
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+}
+
+.error {
+  border-radius: 5px;
+  background-color: #ffaaaa;
+  padding: 10px;
+  color: #440000;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inputFields {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 0;
+}
+
+.input {
+  padding: 5px;
+  border: 1px solid #e1e8ed;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 5px;
+}

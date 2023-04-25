@@ -1,0 +1,39 @@
+.loginForm {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  flex: 1 0 0;
+  justify-content: flex-end;
+  color: #ffffff;
+}
+
+.formButton {
+  composes: whiteButton from "../common.module.css";
+}
+
+.welcomeText {
+  color: #ffffff;
+  font-size: 16px;
+  margin-right: 10px;
+  padding: 5px 0;
+}
+
+.formInput {
+  padding: 5px;
+  border: 1px solid #e1e8ed;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: #1da1f2;
+}
+
+.formInput::placeholder {
+  color: #8899a6;
+}
+
+.errorInput {
+  background-color: #ffa6b2;
+}

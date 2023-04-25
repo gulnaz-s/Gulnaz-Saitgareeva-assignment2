@@ -1,0 +1,30 @@
+.profile {
+  composes: pageBlock from "./common.module.css";
+  text-align: center;
+}
+
+.username {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dateJoined {
+  font-size: 14px;
+  color: #657786;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 16px;
+}
+
+.editDescription {
+  font-size: 16px;
+  color: #1da1f2;
+  text-decoration: none;
+}
+
+.editDescription:hover {
+  text-decoration: underline;
+}

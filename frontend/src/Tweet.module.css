@@ -1,0 +1,75 @@
+.tweet {
+  border-bottom: 1px solid #e1e8ed;
+  padding: 10px 0;
+}
+
+.tweet:last-child {
+  border-bottom: none;
+}
+
+.tweetUsername {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 5px;
+  text-decoration: none;
+  color: #1da1f2;
+}
+
+.tweetUsername:hover {
+  text-decoration: underline;
+}
+
+.tweetHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tweetDate {
+  font-size: 14px;
+  color: #657786;
+}
+
+.tweetActions {
+  font-size: 12px;
+  margin: 5px 0;
+  text-align: right;
+}
+
+.editLink,
+.deleteLink {
+  color: #657786;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.editLink:hover,
+.deleteLink:hover {
+  text-decoration: underline;
+}
+
+.tweetText {
+  font-size: 16px;
+  margin: 5px 0;
+  white-space: pre-wrap;
+}
+
+.tweetInput {  /* textarea */
+  composes: tweetInput from "./common.module.css";
+}
+
+.deletedText {
+  color: #657786;
+  margin: 5px 0;
+  font-style: italic;
+  font-size: 16px;
+}
+
+.undoLink {
+  color: #1da1f2;
+  text-decoration: none;
+}
+
+.submitButton {
+  composes: blueButton from "./common.module.css";
+}

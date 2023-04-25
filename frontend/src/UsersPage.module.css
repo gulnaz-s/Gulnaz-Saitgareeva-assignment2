@@ -1,0 +1,44 @@
+.container {
+  composes: pageBlock from "./common.module.css";
+
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+}
+
+.error {
+  margin: 50px;
+  text-align: center;
+}
+
+.item {
+  border-bottom: 1px solid #e1e8ed;
+  padding: 10px 0;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.username {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 5px;
+  text-decoration: none;
+  color: #1da1f2;
+}
+
+.dateJoined {
+  font-size: 14px;
+  color: #657786;
+}
+
+.description {
+  margin-top: 5px;
+}

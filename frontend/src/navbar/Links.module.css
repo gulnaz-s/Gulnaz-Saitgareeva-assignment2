@@ -1,0 +1,23 @@
+.topLinks {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  flex: 1 0 0;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  font-size: 16px;
+  color: white;
+  text-decoration: none;
+  width: 100px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

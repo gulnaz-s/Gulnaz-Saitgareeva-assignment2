@@ -1,0 +1,18 @@
+.navbar {
+  background-color: #1da1f2;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 15px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 65px;
+}
+
+.appName {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  flex: 1 0 0;
+}

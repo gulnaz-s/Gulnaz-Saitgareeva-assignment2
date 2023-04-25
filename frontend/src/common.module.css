@@ -1,0 +1,46 @@
+.tweetInput {  /* textarea */
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  font-family: inherit;
+  padding: 5px;
+  border: 1px solid #e1e8ed;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  resize: none;
+  overflow-y: hidden;
+  box-sizing: border-box;
+}
+
+.pageBlock {
+  background-color: #ffffff;
+  border: 1px solid #e1e8ed;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 50%;
+  max-width: 600px;
+}
+
+.genericButton {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 6px 12px;
+  text-decoration: none;
+  white-space: pre;
+}
+
+.blueButton {
+  composes: genericButton;
+  background-color: #1da1f2;
+  color: #ffffff;
+}
+
+.whiteButton {
+  composes: genericButton;
+  background-color: #ffffff;
+  color: #1da1f2;
+}
