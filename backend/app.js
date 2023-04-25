@@ -8,16 +8,16 @@ const passport = require("passport");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const cors = require("cors");
+const path = require("path");
 const { User, Tweet } = require("./models");
+const { use } = require("passport");
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(passport.initialize());
-
-// Allow CORS from all origins
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/twitter_clone";
 
@@ -59,8 +59,8 @@ function auth(req, res, next) {
 
 // Routes
 
-// GET /users/:username/feed
-app.get("/users/:username/feed", async (req, res) => {
+// GET /api/users/:username/feed
+app.get("/api/users/:username/feed", async (req, res) => {
   try {
     const { params } = req;
     const { username } = params;
@@ -87,8 +87,8 @@ app.get("/users/:username/feed", async (req, res) => {
   }
 });
 
-// GET /tweets
-app.get("/tweets", async (req, res) => {
+// GET /api/tweets
+app.get("/api/tweets", async (req, res) => {
   try {
     const feed = await Tweet.find({ deleted: false }).sort({ timestamp: -1 });
     res.json({ feed: feed.map((tweet) => tweet.getPublicPart()) });
@@ -97,8 +97,8 @@ app.get("/tweets", async (req, res) => {
   }
 });
 
-// GET /users
-app.get("/users", async (req, res) => {
+// GET /api/users
+app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find().sort({ joined: -1 });
     res.json({ users: users.map((user) => user.getPublicPart()) });
@@ -107,8 +107,8 @@ app.get("/users", async (req, res) => {
   }
 });
 
-// POST /tweets
-app.post("/tweets", auth, async (req, res) => {
+// POST /api/tweets
+app.post("/api/tweets", auth, async (req, res) => {
   try {
     const { user, body } = req;
     if (user == null) {
@@ -121,7 +121,7 @@ app.post("/tweets", auth, async (req, res) => {
     const tweet = new Tweet({
       username,
       message,
-      timestamp: Date.now(),
+      timestamp: Math.floor(Date.now() / 1000),
     });
 
     await tweet.save();
@@ -131,8 +131,8 @@ app.post("/tweets", auth, async (req, res) => {
   }
 });
 
-// PUT /tweets/:id
-app.put("/tweets/:id", auth, async (req, res) => {
+// PUT /api/tweets/:id
+app.put("/api/tweets/:id", auth, async (req, res) => {
   try {
     const { user, params, body } = req;
     if (user == null) {
@@ -168,8 +168,8 @@ app.put("/tweets/:id", auth, async (req, res) => {
   }
 });
 
-// DELETE /tweets/:id
-app.delete("/tweets/:id", auth, async (req, res) => {
+// DELETE /api/tweets/:id
+app.delete("/api/tweets/:id", auth, async (req, res) => {
   try {
     const { user, params } = req;
     if (user == null) {
@@ -194,8 +194,8 @@ app.delete("/tweets/:id", auth, async (req, res) => {
   }
 });
 
-// PUT /tweets/:id/restore
-app.put("/tweets/:id/restore", auth, async (req, res) => {
+// PUT /api/tweets/:id/restore
+app.put("/api/tweets/:id/restore", auth, async (req, res) => {
   try {
     const { user, params } = req;
     if (user == null) {
@@ -221,8 +221,8 @@ app.put("/tweets/:id/restore", auth, async (req, res) => {
   }
 });
 
-// POST /login
-app.post("/login", async (req, res) => {
+// POST /api/login
+app.post("/api/login", async (req, res) => {
   try {
     const { body } = req;
     const { username, password } = body;
@@ -253,14 +253,14 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// POST /logout
-app.post("/logout", async (req, res) => {
+// POST /api/logout
+app.post("/api/logout", async (req, res) => {
   res.clearCookie("jwt");
   res.json({});
 });
 
-// POST /signup
-app.post("/signup", async (req, res) => {
+// POST /api/signup
+app.post("/api/signup", async (req, res) => {
   try {
     const { body } = req;
     const { username, password } = body;
@@ -280,12 +280,10 @@ app.post("/signup", async (req, res) => {
     }
 
     if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Invalid username. Only alphanumeric characters and underscores are allowed.",
-        });
+      return res.status(400).json({
+        error:
+          "Invalid username. Only alphanumeric characters and underscores are allowed.",
+      });
     }
 
     if (password.length === 0) {
@@ -310,8 +308,8 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-// GET /me
-app.get("/me", auth, async (req, res) => {
+// GET /api/me
+app.get("/api/me", auth, async (req, res) => {
   try {
     res.json({ user: req.user?.getPublicPart() || null });
   } catch (err) {
@@ -319,8 +317,8 @@ app.get("/me", auth, async (req, res) => {
   }
 });
 
-// PUT /me/description
-app.put("/me/description", auth, async (req, res) => {
+// PUT /api/me/description
+app.put("/api/me/description", auth, async (req, res) => {
   try {
     let { user, body } = req;
     if (user == null) {
@@ -335,6 +333,16 @@ app.put("/me/description", auth, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// Static site
+
+let frontend_dir = path.join(__dirname, "..", "frontend", "dist");
+
+app.use(express.static(frontend_dir));
+app.get("*", function (req, res) {
+  console.log("received request");
+  res.sendFile(path.join(frontend_dir, "index.html"));
 });
 
 const port = process.env.PORT || 3000;
